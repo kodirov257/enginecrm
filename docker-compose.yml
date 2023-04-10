@@ -1,0 +1,82 @@
+version: '3.8'
+services:
+
+  nginx:
+    image: nginx:1.23-alpine
+    container_name: enginecrm-nginx
+    restart: unless-stopped
+    ports:
+      - 5500:80
+    volumes:
+      # Re-use local composer cache via host-volume
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      # Mount source-code for development
+      - ./:/var/www/html
+      # Mount config for development
+      - ./docker/nginx:/etc/nginx/conf.d:cached
+    links:
+      - php-fpm
+    depends_on:
+      - php-fpm
+      - db
+    networks:
+      - enginecrm
+
+  php-fpm:
+    build: docker/php-fpm
+    restart: unless-stopped
+    container_name: enginecrm-php
+    ports:
+      - 9000:9000
+    volumes:
+      - ./:/var/www/html:cached
+    environment:
+      - DEFAULT_DSN=sqlsrv:Server=mssql;
+      - DEFAULT_USERNAME=SA
+      - DEFAULT_PASSWORD=p@ssw0rd
+      - ENV_SUBSTITUTION_ENABLE=true
+      - PHP_MEMORY_LIMIT=512M
+      - PHP_SESSION_GC_MAXLIFETIME=7200
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+    networks:
+      - enginecrm
+
+  db:
+    build: docker/sqlsrv
+    ports:
+      - 1433:1433
+    container_name: enginecrm-db
+    restart: unless-stopped
+    volumes:
+#      - ./docker/sqlsrv/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - ./docker/sqlsrv/db-cache:/var/lib/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=p@ssw0rd
+    networks:
+      - enginecrm
+
+  redis:
+    image: redis
+    restart: unless-stopped
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - 6379:6379
+    container_name: enginecrm-redis
+    volumes:
+      - ./:/var/www/html:cached
+    networks:
+      - enginecrm
+
+networks:
+  enginecrm:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.186.0/28

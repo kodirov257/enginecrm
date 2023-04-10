@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test', 'TestController@index')->name('test');
+
+Route::get('testdb', 'TestController@testDb')->name('testdb');
+
 Route::get('/', function () {
     return view('welcome');
 });
