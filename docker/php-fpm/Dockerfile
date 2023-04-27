@@ -47,21 +47,5 @@ RUN apk update \
 COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
 COPY ./error_reporting.ini "${PHP_INI_DIR}/conf.d"
 
-# Install SQL Server extensions
-#ENV ACCEPT_EULA=Y
-#RUN curl https://packages.microsoft.com/keys/microsoft.asc | apk add - \
-#    && curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-#    && apk install -y --no-install-recommends locales apt-transport-https \
-#    && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
-#    && locale-gen \
-#    && apk update
-#RUN apk install -y msodbcsql17 mssql-tools
-#RUN apk add unixodbc-dev libgssapi-krb5-2
-#RUN apk add unixodbc-dev
-#RUN pecl install sqlsrv-5.10.1
-#RUN pecl install pdo_sqlsrv-5.10.1
-#RUN docker-php-ext-enable sqlsrv
-#RUN docker-php-ext-enable pdo_sqlsrv
-
 EXPOSE 9000
 CMD ["php-fpm", "-F"]

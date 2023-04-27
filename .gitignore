@@ -20,3 +20,6 @@ yarn-error.log
 
 _ide_helper.php
 .phpstorm.meta.php
+
+supervisord.log
+supervisord.pid

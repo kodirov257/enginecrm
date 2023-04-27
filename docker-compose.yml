@@ -16,8 +16,10 @@ services:
       - ./docker/nginx:/etc/nginx/conf.d:cached
     links:
       - php-fpm
+      - websockets
     depends_on:
       - php-fpm
+      - websockets
       - db
     networks:
       - enginecrm
@@ -72,6 +74,23 @@ services:
       - ./:/var/www/html:cached
     networks:
       - enginecrm
+
+  websockets:
+    build: docker/websocket
+    container_name: enginecrm-websockets
+    restart: unless-stopped
+    working_dir: /var/www/html/
+    volumes:
+        - ./:/var/www/html:cached
+    ports:
+        - ${LARAVEL_WEBSOCKETS_PORT}:6001
+    links:
+        - db
+        - redis
+    depends_on:
+        - db
+    networks:
+        - enginecrm
 
 networks:
   enginecrm:
