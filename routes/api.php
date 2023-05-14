@@ -14,8 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('stations', 'StationController@index')->name('index');
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['middleware' => 'api', 'prefix' => 'auth'], function () {
+    Route::post('/register', 'Api\AuthController@register');
+    Route::post('/login', 'Api\AuthController@login');
+    Route::post('/logout', 'Api\AuthController@logout');
+    Route::post('/refresh', 'Api\AuthController@refresh');
+    Route::get('/me', 'Api\AuthController@userProfile');
+});
+
+Route::post('stations/update', 'Api\StationController@update');
+
+Route::get('stations', 'Api\StationController@index');

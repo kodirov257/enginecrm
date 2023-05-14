@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,36 @@ return new class extends Migration
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
+
+        DB::table('stations')->insert([
+            'station'           => 1,
+            'name'              => 'Station 1',
+            'alert'             => 0,
+            'lat'               => 0,
+            'long'              => 0,
+            'created_at'        => Carbon::now(),
+            'updated_at'        => Carbon::now(),
+        ]);
+
+        DB::table('stations')->insert([
+            'station'           => 2,
+            'name'              => 'Station 2',
+            'alert'             => 0,
+            'lat'               => 0,
+            'long'              => 0,
+            'created_at'        => Carbon::now(),
+            'updated_at'        => Carbon::now(),
+        ]);
+
+        DB::table('stations')->insert([
+            'station'           => 3,
+            'name'              => 'Station 3',
+            'alert'             => 0,
+            'lat'               => 0,
+            'long'              => 0,
+            'created_at'        => Carbon::now(),
+            'updated_at'        => Carbon::now(),
+        ]);
     }
 
     /**

@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
+let host = 'localhost';
+let port = 5500;
+
 export default defineConfig({
     plugins: [
         laravel({
@@ -8,4 +11,12 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        host: host,
+        port: port,
+        hmr: {
+            host: host,
+            port: port,
+        },
+    },
 });
