@@ -5,10 +5,10 @@ RUN apk add --update linux-headers
 ENV ACCEPT_EULA=Y
 
 # Install ioncube
-ADD http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz /tmp/
-RUN tar -xzvf /tmp/ioncube_loaders_lin_x86-64.tar.gz -C /tmp/ \
-    && mkdir -p /usr/local/php/ext/ioncube \
-    && cp -a /tmp/ioncube/ioncube_loader_lin_${PHP_VERSION%.*}.so /usr/local/php/ext/ioncube/ioncube_loader.so
+#ADD http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz /tmp/
+#RUN tar -xzvf /tmp/ioncube_loaders_lin_x86-64.tar.gz -C /tmp/ \
+#    && mkdir -p /usr/local/php/ext/ioncube \
+#    && cp -a /tmp/ioncube/ioncube_loader_lin_${PHP_VERSION%.*}.so /usr/local/php/ext/ioncube/ioncube_loader.so
 
 COPY ["conf.d/05-apcu-recommended.ini", "conf.d/05-opcache-recommended.ini", "conf.d/05-security-recommended.ini", "/usr/local/etc/php/conf.d/"]
 
