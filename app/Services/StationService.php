@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Entity\Station;
 use App\Events\StationColumnsUpdated;
+use App\Events\StationsUpdated;
 
 class StationService
 {
@@ -28,6 +29,12 @@ class StationService
         }
 
         return $station;
+    }
+
+    public function checkStations()
+    {
+        $stations = Station::all();
+        event(new StationsUpdated($stations));
     }
 
     private function updateSession(string $stationName, Station $station): void

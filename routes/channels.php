@@ -21,3 +21,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('stations.{station}', function (User $user, int $stationNumber) {
     return $user->exists && \App\Entity\Station::findOrFail($stationNumber)->exists();
 });
+
+Broadcast::channel('stations', function () {
+    return true;
+});

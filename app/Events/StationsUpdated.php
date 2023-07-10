@@ -7,20 +7,23 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StationsUpdated
+class StationsUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+//    public Collection $stations;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
-    {
-        //
-    }
+//    public function __construct(Collection $stations)
+//    {
+//        $this->stations = $stations;
+//    }
 
     /**
      * Get the channels the event should broadcast on.
@@ -30,12 +33,20 @@ class StationsUpdated
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('private.stations.1'),
+            new Channel('public.stations.1'),
         ];
     }
 
     public function broadcastAs(): string
     {
         return 'stations-status';
+    }
+
+    public function broadcastWith(): array
+    {
+//        return $this->stations->toArray();
+        return [
+            'message' => 'Hello World!!!',
+        ];
     }
 }

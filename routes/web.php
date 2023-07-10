@@ -20,3 +20,7 @@ Route::get('testdb', 'TestController@testDb')->name('testdb');
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/listen', function () {
+    return view('listen');
+});

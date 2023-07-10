@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('station')->primary();
             $table->string('name')->nullable(false)->default('');
             $table->tinyInteger('alert')->nullable(false)->default(0);
-            $table->integer('lat')->nullable(false)->default(0);
-            $table->integer('long')->nullable(false)->default(0);
+            $table->string('lat')->nullable(false)->default('0');
+            $table->string('long')->nullable(false)->default('0');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
@@ -27,8 +27,8 @@ return new class extends Migration
             'station'           => 1,
             'name'              => 'Station 1',
             'alert'             => 0,
-            'lat'               => 0,
-            'long'              => 0,
+            'lat'               => '41.2995',
+            'long'              => '69.2401',
             'created_at'        => Carbon::now(),
             'updated_at'        => Carbon::now(),
         ]);
@@ -37,8 +37,8 @@ return new class extends Migration
             'station'           => 2,
             'name'              => 'Station 2',
             'alert'             => 0,
-            'lat'               => 0,
-            'long'              => 0,
+            'lat'               => '41.297521',
+            'long'              => '69.252506',
             'created_at'        => Carbon::now(),
             'updated_at'        => Carbon::now(),
         ]);
@@ -47,8 +47,8 @@ return new class extends Migration
             'station'           => 3,
             'name'              => 'Station 3',
             'alert'             => 0,
-            'lat'               => 0,
-            'long'              => 0,
+            'lat'               => '41.289267',
+            'long'              => '69.283082',
             'created_at'        => Carbon::now(),
             'updated_at'        => Carbon::now(),
         ]);

@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property integer $station
  * @property string $name
  * @property integer $alert
- * @property integer $lat
- * @property integer $long
+ * @property string $lat
+ * @property string $long
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
