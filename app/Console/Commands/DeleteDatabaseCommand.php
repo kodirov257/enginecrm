@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use PDO;
 
-class CreateDatabaseCommand extends Command
+class DeleteDatabaseCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'database:create {dbname?} {connection?}';
+    protected $signature = 'database:delete {dbname}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a database';
+    protected $description = 'Delete a database';
 
     /**
      * Execute the console command.
@@ -36,11 +36,11 @@ class CreateDatabaseCommand extends Command
 
             $hasDb = DB::connection($connection)->select("SELECT name FROM master.sys.databases WHERE name = " . "'" . $dbname . "'");
 
-            if (empty($hasDb)) {
-                DB::connection($connection)->select('CREATE DATABASE ' . $dbname . ';');
-                $this->info("Database '$dbname' created for '$connection' connection");
+            if (!empty($hasDb)) {
+                DB::connection($connection)->select('DROP DATABASE ' . $dbname . ';');
+                $this->info("Database '$dbname' deleted for '$connection' connection");
             } else {
-                $this->warn("Database $dbname already exists for $connection connection");
+                $this->warn("Database $dbname does not exist for $connection connection");
             }
         } catch (\Exception $e) {
             $this->error($e->getMessage());
