@@ -32,7 +32,7 @@ class DeleteDatabaseCommand extends Command
                 $dbname = env('DB_DATABASE');
             }
 
-            $connection = $this->hasArgument('connection') && $this->argument('connection') ? $this->argument('connection') : DB::connection('sqlsrv_master')->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME);
+            $connection = $this->hasArgument('connection') && $this->argument('connection') ? $this->argument('connection') : 'sqlsrv_master';
 
             $hasDb = DB::connection($connection)->select("SELECT name FROM master.sys.databases WHERE name = " . "'" . $dbname . "'");
 
